@@ -1,3 +1,10 @@
+#venv
+.immoeliza_venv
+
+# folder & files
+data
+to_do.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
