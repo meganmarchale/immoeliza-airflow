@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import time
 import random
+import csv
 
 class PropertyDetailScraper:
     def __init__(self, urls, delay=(1, 3)):
@@ -90,10 +91,13 @@ class PropertyDetailScraper:
 
 # --- Example usage ---
 if __name__ == "__main__":
-    urls = [
-        "https://immovlan.be/fr/detail/villa/a-vendre/7912/dergneau/rbu25876",
-        # add more links from your CSV
-    ]
+    urls = []
+    with open("./data/properties_noduplicates.csv", newline="", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for i, row in enumerate(reader):
+                    urls.append(row["link"])  # pick the "link" column
+                    if i == 9:  # stop after 10 links (0–9)
+                        break
 
     scraper = PropertyDetailScraper(urls)
     properties = scraper.run()

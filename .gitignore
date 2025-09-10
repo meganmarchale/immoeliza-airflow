@@ -2,8 +2,10 @@
 .immoeliza_venv
 
 # folder & files
-data
 to_do.md
+data/properties.csv
+data/properties_noduplicates.csv
+data/properties_copy.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -24,7 +24,9 @@ The first step consists in building a first dataset, as complete as possible. Th
 
 The scraper will fetch: the property link - the type (house, apartment, etc.) - the location - the price.
 
-The scraper is **flexible** on order to make it more **robust over time**. It is also voluntarily slowed in order to avoid overlaoding the website we are scraping: 20min/1000 links (50 pages).  
+The scraper is **flexible** on order to make it more **robust over time**. It is also intentionaly slowed in order to avoid overlaoding the website we are scraping. Furthermore, note that after reaching 1000 links scraped, the website keeps repeating the links. I therefore adapted the scripts in order to scrape by [locality](data/code-postaux-belge.csv) and avoid this 1000 links limitation.  
+
+_Note that the process can be speed up using parallel processing._   
 
 As we scraped the list of properties, we only got basic info. We now need **additional info** that are being fetched by a [second scraper](utils/details_scraper.py). This scraper opens each link that has been scraped in the first scraper and gets missing details such as the **size of the property, the amount of bedrooms, etc.** 
 
@@ -33,6 +35,11 @@ As we scraped the list of properties, we only got basic info. We now need **addi
 k
 
 ### 2. Storing 
+
+"""
+For daily scraping:
+Everyday: copy the dataset before modifying it for safety. And delete automatically the one from the previous day. 
+"""
 
 ### 3. Setting & training the model
 

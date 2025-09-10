@@ -135,8 +135,6 @@ class PropertyScraper:
 
     def scrape_locality(self, locality, max_pages=None):
         page = 1
-        consecutive_existing = 0  # counter for existing links
-
         while True:
             url = f"{self.base_url}&towns={locality}&page={page}"
             html = self.fetch_page(url)
@@ -145,34 +143,17 @@ class PropertyScraper:
 
             data = self.parse_page(html)
             if not data:
-                print(f"No more properties in {locality} (page {page})")
+                print(f"✅ No more properties in {locality} (page {page})")
                 break
 
-            # Check how many are duplicates
-            new_data = []
-            for row in data:
-                if row["link"] in self.existing_links:
-                    consecutive_existing += 1
-                    print(f"Skipping existing link ({consecutive_existing} in a row)")
-                else:
-                    new_data.append(row)
-                    consecutive_existing = 0  # reset when new property is found
-
-            # If 5 duplicates in a row → stop locality
-            if consecutive_existing >= 5:
-                print(f"Stopping {locality} early (5 existing links in a row)")
-                break
-
-            # Save only the new rows
-            self.save_to_csv(new_data)
-            print(f"{locality} - page {page} scraped ({len(new_data)} new rows)")
+            self.save_to_csv(data)
+            print(f"✔️ {locality} - page {page} scraped")
             page += 1
 
             if max_pages and page > max_pages:
                 break
 
             time.sleep(random.uniform(0.5, 1.5))  # polite delay
-
 
     def run(self, max_pages=None):
         for locality in self.localities:
@@ -192,10 +173,10 @@ if __name__ == "__main__":
     )
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    data_file = os.path.join(script_dir, ".", "data", "properties.csv")
+    data_file = os.path.join(script_dir, "data", "properties.csv")
     data_file = os.path.abspath(data_file)
 
-    postal_codes_csv = os.path.join(script_dir, ".", "data", "code-postaux-belge.csv")
+    postal_codes_csv = os.path.join(script_dir, "data", "code-postaux-belge.csv")
 
     scraper = PropertyScraper(
         base_url=BASE_URL,
