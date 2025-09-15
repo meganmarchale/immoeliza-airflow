@@ -28,11 +28,13 @@ The scraper is **flexible** on order to make it more **robust over time**. It is
 
 _Note that the process can be speed up using parallel processing._   
 
-As we scraped the list of properties, we only got basic info. We now need **additional info** that are being fetched by a [second scraper](utils/details_scraper.py). This scraper opens each link that has been scraped in the first scraper and gets missing details such as the **size of the property, the amount of bedrooms, etc.** 
+As we scraped the list of properties, we only got basic info. We now need **additional info** that are being fetched by a [second scraper](utils/details_scraper.py). This scraper opens each link that has been scraped in the first scraper and gets missing details such as the **size of the property, the amount of bedrooms, etc.**   
+
+_Additional scraper: 82 min/32,800 links --> Using parallel processing in order to speed up the process as each link is unique._  
 
 **1.2. Cleaning the dataset**
-  
-k
+
+Once we've got a good basic dataset, this one needs to be cleaned in order to fit machine learning required format. This cleaner is used on the first version of the dataset. The scrapers will then be adapted so that the new data match the needed format and conditions directly when being scraped. This way, we'll avoid having to clean the data every day.  
 
 ### 2. Storing 
 
@@ -68,6 +70,8 @@ A [DAG](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags
 - Ajouter ces données directement dans le csv
 
 - Relancer le scraper sur liens
+
+- Ne pas prendre en compte les nouveaux projets : autre structure
 
 - Ajouter une verification pour scraper que les nouveaux liens ensuite. 
 

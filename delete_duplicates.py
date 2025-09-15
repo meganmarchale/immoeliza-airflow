@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-input_file = "data/properties_copy.csv"
+input_file = "data/properties.csv"
 output_file = "data/properties_noduplicates.csv"
 
 # Load CSV into DataFrame

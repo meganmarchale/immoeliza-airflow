@@ -1,3 +1,5 @@
+# Add parralel processing in order to run it faster
+
 import requests
 from bs4 import BeautifulSoup
 import time
